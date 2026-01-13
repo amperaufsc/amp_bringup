@@ -22,7 +22,7 @@ def generate_launch_description():
     
     check = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_control'),'launch'),
+            get_package_share_directory('control'),'launch'),
             '/check.launch.py'
             ]),
             launch_arguments={'/control_command':'/control_command'}.items()

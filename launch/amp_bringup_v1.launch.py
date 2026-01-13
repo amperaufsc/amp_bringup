@@ -106,7 +106,7 @@ def generate_launch_description():
 
     mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/lifecycle_mapper_v1.launch.py'
             ]),
             launch_arguments={'odom':'/orbslam/odom',
@@ -117,7 +117,7 @@ def generate_launch_description():
 
     odom = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/odometry.launch.py'
             ]),
             launch_arguments={'pose_sub':'/AMP/orbslam/pose',
@@ -126,7 +126,7 @@ def generate_launch_description():
     
     path = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
-            get_package_share_directory('ros2_path_planning'), 'launch'),
+            get_package_share_directory('path_planning'), 'launch'),
             '/path_lifecycle_v1.launch.py'
         ]),
         launch_arguments={'namespace':"/AMP", 'odom':"/orbslam/odom", 'go': "/signal/go", 'track':"/mapper/track"}.items()
@@ -134,7 +134,7 @@ def generate_launch_description():
      
     control = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
-            get_package_share_directory('ros2_control'), 'launch'),
+            get_package_share_directory('control'), 'launch'),
             '/control_lifecycle_v1.launch.py',
         ]),
         launch_arguments = {'namespace':"/AMP",

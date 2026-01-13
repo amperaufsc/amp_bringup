@@ -17,7 +17,7 @@ def generate_launch_description():
 
     mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/mapper.launch.py'
         ]),
         launch_arguments={'track':"/track",
@@ -28,7 +28,7 @@ def generate_launch_description():
     
     sim_mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/sim_mapper.launch.py'
         ]),
         launch_arguments={'track':"/fsds/testing_only/track",

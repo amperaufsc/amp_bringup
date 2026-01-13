@@ -51,7 +51,7 @@ def generate_launch_description():
 
     mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/mapper.launch.py'
             ]),
             launch_arguments={'odom':"/orbslam/odom",
@@ -74,7 +74,7 @@ def generate_launch_description():
 
     odom = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/odometry.launch.py'
             ]),
             launch_arguments={'pose_sub':'/AMP/orbslam/pose',

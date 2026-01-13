@@ -22,7 +22,7 @@ def generate_launch_description():
     )
     track_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/mapper_test.launch.py'
             ]),
             launch_arguments={'odom':'/fsds/testing_only/odom',

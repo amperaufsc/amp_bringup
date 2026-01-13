@@ -11,7 +11,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     
-    '''yolo = IncludeLaunchDescription(
+    yolo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
             get_package_share_directory('yolobot_recognition'), 'launch'),
             '/launch_yolov8.launch.py'
@@ -39,10 +39,10 @@ def generate_launch_description():
                               'namespace':"/AMP"}.items()
             
             
-    )'''
+    )
     mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/mapper.launch.py'
             ]),
             launch_arguments={'odom':'/orbslam/odom',
@@ -86,29 +86,6 @@ def generate_launch_description():
         TimerAction(
             period=15.0,  # Delay in seconds
             actions=[fsds],
-        )
-
-       ''' #track_sim,
-        mapper,
-        #yolo,
-        #perception,
-        ExecuteProcess(
-             cmd=['/opt/ros/humble/lib/tf2_ros/static_transform_publisher',
-                  '--yaw', '0',
-                  '--roll', '0',
-                  '--pitch', '0',
-                  '--frame-id', 'orbslam3',
-                  '--child-frame-id', 'fsds/map'],
-             output='screen',),
-        ExecuteProcess(
-             cmd=['/opt/ros/humble/lib/tf2_ros/static_transform_publisher',
-                  '--yaw', '-1.570796327',
-                  '--roll', '-1.5707963270',
-                  '--pitch', '0',
-                  '--frame-id', 'left_camera_link',
-                  '--child-frame-id', 'oak_left_camera_optical_frame'],
-             output='screen',)
-        '''
-
+        )])
 
 
