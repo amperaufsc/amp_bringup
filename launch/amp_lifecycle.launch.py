@@ -54,22 +54,22 @@ def final_status_check(context, *args, **kwargs):
 def generate_launch_description():
     perception_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('perception'), 'launch/lifecycle_dpe_v1.launch.py')
+            os.path.join(get_package_share_directory('perception'), 'launch/lifecycle_dpe.launch.py')
         )
     )
     path_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('path_planning'), 'launch/path_lifecycle_v1.launch.py')
+            os.path.join(get_package_share_directory('path_planning'), 'launch/path_lifecycle.launch.py')
         )
     )
     control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('control'), 'launch/control_lifecycle_v1.launch.py')
+            os.path.join(get_package_share_directory('control'), 'launch/control_lifecycle.launch.py')
         )
     )
     mapper_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('mapper'), 'launch/lifecycle_mapper_v1.launch.py')
+            os.path.join(get_package_share_directory('mapper'), 'launch/mapper_lifecycle.launch.py')
         )
     )
 
