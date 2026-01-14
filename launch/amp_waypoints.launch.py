@@ -18,7 +18,7 @@ def generate_launch_description():
 
     path = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
-            get_package_share_directory('ros2_path_planning'), 'launch'),
+            get_package_share_directory('path_planning'), 'launch'),
             '/path_planning.launch.py'
         ]),
         launch_arguments={'namespace':"/AMP", 'odom':"/testing_only/odom", 'go': "/signal/go", 'track':"/testing_only/track"}.items()
@@ -26,7 +26,7 @@ def generate_launch_description():
 
     control = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
-            get_package_share_directory('ros2_control'), 'launch'),
+            get_package_share_directory('control'), 'launch'),
             '/control.launch.py',
         ]),
         launch_arguments = {'namespace':"/AMP",'odom':"/testing_only/odom", 

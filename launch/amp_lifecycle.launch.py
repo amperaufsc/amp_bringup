@@ -59,17 +59,17 @@ def generate_launch_description():
     )
     path_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('ros2_path_planning'), 'launch/path_lifecycle_v1.launch.py')
+            os.path.join(get_package_share_directory('path_planning'), 'launch/path_lifecycle_v1.launch.py')
         )
     )
     control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('ros2_control'), 'launch/control_lifecycle_v1.launch.py')
+            os.path.join(get_package_share_directory('control'), 'launch/control_lifecycle_v1.launch.py')
         )
     )
     mapper_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('ros2_mapper'), 'launch/lifecycle_mapper_v1.launch.py')
+            os.path.join(get_package_share_directory('mapper'), 'launch/lifecycle_mapper_v1.launch.py')
         )
     )
 

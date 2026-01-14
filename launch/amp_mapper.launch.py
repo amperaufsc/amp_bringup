@@ -15,7 +15,7 @@ def generate_launch_description():
 
     mapper = IncludeLaunchDescription(
     PythonLaunchDescriptionSource([os.path.join(
-        get_package_share_directory('ros2_mapper'),'launch'),
+        get_package_share_directory('mapper'),'launch'),
         '/mapper.launch.py'
     ]),
     launch_arguments={'track':"/track",
