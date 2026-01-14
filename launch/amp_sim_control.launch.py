@@ -11,31 +11,32 @@ def generate_launch_description():
 
     path = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
-            get_package_share_directory('ros2_path_planning'), 'launch'),
+            get_package_share_directory('path_planning'), 'launch'),
             '/path_planning.launch.py'
         ]),
         launch_arguments={'namespace':"/AMP", 
                           'odom':"/fsds/testing_only/odom", 
                           'go': "/signal/go", 
-                          'track':"/mapper/track",
-                          'path':"/path"}.items()
+                          'track':"/fsds/testing_only/track",
+                          'path':"/path",
+                          'path_concatenated':"/path_concatenated"}.items()
     )
 
     control = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
-            get_package_share_directory('ros2_control'), 'launch'),
+            get_package_share_directory('control'), 'launch'),
             '/control.launch.py',
         ]),
         launch_arguments = {'namespace':"/AMP",
                             'odom':"/fsds/testing_only/odom", 
-                            'path':"/path",
+                            'path':"/AMP/path_concatenated",
                             'control':"/fsds/control_command"
                             }.items()
     )
-
+    '''
     mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/mapper.launch.py'
             ]),
             launch_arguments={'namespace':"/AMP",
@@ -47,7 +48,7 @@ def generate_launch_description():
     
     sim_mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('ros2_mapper'),'launch'),
+            get_package_share_directory('mapper'),'launch'),
             '/sim_track.launch.py'
             ]),
             launch_arguments={'namespace':"/AMP",
@@ -56,10 +57,10 @@ def generate_launch_description():
                             'track_pub':"/sim_mapper/track"
                             }.items()
    )
-
+    '''
     return LaunchDescription([
-        #path,
-        control,
+        path,
+        control
         #sim_mapper,
-        mapper        
+        #mapper        
     ])
