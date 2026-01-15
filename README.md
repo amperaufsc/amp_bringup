@@ -8,5 +8,5 @@ This repository contains the bringups for the project’s packages, providing a 
 
 ## Launching files 
 ```bash
-    ros2 launch as_bringup <file_name>
+    ros2 launch amp_bringup <file_name>
    ```

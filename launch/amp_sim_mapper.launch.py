@@ -13,8 +13,6 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-
-
     mapper = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('mapper'),'launch'),
@@ -36,8 +34,6 @@ def generate_launch_description():
                           'odom':"/fsds/testing_only/odom",
                           'namespace':"/AMP"}.items()
     )
-    
-
 
     return LaunchDescription([
         ExecuteProcess(
@@ -52,6 +48,4 @@ def generate_launch_description():
         TimerAction(
             period=10.0,  # Delay in seconds
             actions=[mapper]),
-
-
     ])
