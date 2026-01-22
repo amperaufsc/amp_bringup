@@ -13,14 +13,14 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    dir = f"/mnt/exfat/bag_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    '''dir = f"/mnt/exfat/bag_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
     depthai = IncludeLaunchDescription(
     PythonLaunchDescriptionSource([os.path.join(
             FindPackageShare('depthai_ros_driver').find('depthai_ros_driver'), 
             'launch', 'camera.launch.py')
         ])
-    )
+    )'''
 
     
     yolo = IncludeLaunchDescription(
@@ -91,7 +91,7 @@ def generate_launch_description():
                   '--child-frame-id', 'map'],
              output='screen',),
              
-        depthai,
+        mapper, 
         orbslam,
         odom,
         yolo,

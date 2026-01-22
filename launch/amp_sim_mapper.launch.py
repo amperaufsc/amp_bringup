@@ -41,6 +41,8 @@ def generate_launch_description():
                   '--yaw', '0',
                   '--roll', '0',
                   '--pitch', '0',
+                  #'--frame-id', 'fsds/map',    #Use for simulation in FSDS
+                  #'--child-frame-id', 'fsds/map',  #Use for simulation in FSDS
                   '--frame-id', 'left_camera_link',
                   '--child-frame-id', 'oak_left_camera_optical_frame'],
             output='screen',),
