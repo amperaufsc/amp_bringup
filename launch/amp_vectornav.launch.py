@@ -24,7 +24,7 @@ def generate_launch_description():
     pose = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
             get_package_share_directory('state_estimation'), 'launch'),
-            '/pose.launch.py'
+            '/vectornav_pose.launch.py'
         ]),
         launch_arguments={'input_pose':"/vectornav/pose",
                           'output_pose':"/corrected_pose"}.items()
