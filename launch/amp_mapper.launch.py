@@ -20,7 +20,7 @@ def generate_launch_description():
     ]),
     launch_arguments={'track':"/track",
                         'track_pub':"/mapper/track",
-                        'odom':"/orbslam/odom",
+                        'odom':"/odometry/filtered",
                         'namespace':"/AMP"}.items()
 )
     return LaunchDescription([
