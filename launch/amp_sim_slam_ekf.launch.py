@@ -17,7 +17,7 @@ def generate_launch_description():
             get_package_share_directory('pointcloud_to_laserscan'), 'launch'),
             '/amp_pointcloud_to_laserscan.launch.py'
         ]),
-        launch_arguments={'cloud_in':"/fsds/lidar/Lidar1",
+        launch_arguments={'cloud_in':"/fsds/lidar/Lidar2",
                            'scan':"/scan"}.items()
     )
 
@@ -26,7 +26,7 @@ def generate_launch_description():
             get_package_share_directory('transformation_broadcast'), 'launch'),
             '/amp_transformation.launch.py'
         ]),
-            launch_arguments={'odom':"/ekf/composed_odom"}.items()
+            launch_arguments={'odom':"/fsds/testing_only/odom"}.items()
     )
 
     ekf = IncludeLaunchDescription(
