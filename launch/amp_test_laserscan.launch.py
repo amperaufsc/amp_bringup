@@ -14,7 +14,7 @@ def generate_launch_description():
             get_package_share_directory('pointcloud_to_laserscan'),'launch'),
             '/amp_pointcloud_to_laserscan.launch.py'
             ]),
-            launch_arguments={'cloud_in':"/fsds/lidar/Lidar2",
+            launch_arguments={'cloud_in':"/fsds/lidar/Lidar1",
                               'scan':"/scan"}.items()
     )
     
@@ -23,25 +23,17 @@ def generate_launch_description():
             get_package_share_directory('transformation_broadcast'),'launch'),
             '/amp_transformation.launch.py'
             ]),
-            launch_arguments={'odom':"/fsds/testing_only/odom"}.items() #mudar topico 'odom' para /odom_with_error se for usar odom com erro forçado
+            launch_arguments={'odom':"/odometry/filtered"}.items() #mudar topico 'odom' para /odom_with_error se for usar odom com erro forçado
     ) 
 
     slam_toolbox = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('slam_toolbox'),'launch'),
             '/online_async_launch.py'
-            ]),
-            launch_arguments={'scan':"/scan",
-                              'scan_visualization':"/slam_toolbox/scan_visualization",
-                              'graph_visualization':"/slam_toolbox/graph_visualization",
-                              'map':"/map",
-                              'tf':"/tf",
-                              }.items() 
-
+            ])
     ) 
 
     return LaunchDescription([
         laserscan,
-        transform,
         slam_toolbox
     ])
