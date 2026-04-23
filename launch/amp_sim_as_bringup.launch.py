@@ -11,19 +11,24 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    foxglove = Node(
-            package='foxglove_bridge',
-            executable='foxglove_bridge',
-            name='foxglove_bridge',
-            output='screen'
-    )
 
     path = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
             get_package_share_directory('path_planning'), 'launch'),
             '/path_planning.launch.py'
         ]),
-        launch_arguments={'namespace':"/AMP", 'odom':"/testing_only/odom", 'go': "/signal/go", 'track':"/testing_only/track"}.items()
+        launch_arguments={'namespace':"/AMP", 
+                          'odom':"/fsds/testing_only/odom", 
+                          'go': "/fsds/signal/go", 
+                          'track':"/fsds/testing_only/track"}.items()
+    )
+
+    transform = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('transformation_broadcast'),'launch'),
+            '/amp_transformation.launch.py'
+            ]),
+            launch_arguments={'odom':"/fsds/testing_only/odom"}.items() #mudar topico 'odom' para /odom_with_error se for usar odom com erro forçado
     )
 
     control = IncludeLaunchDescription(
@@ -31,25 +36,11 @@ def generate_launch_description():
             get_package_share_directory('control'), 'launch'),
             '/control.launch.py',
         ]),
-        launch_arguments = {'namespace':"/AMP",'odom':"/testing_only/odom", 
-                            'control':"/control_command"
+        launch_arguments = {'namespace':"/AMP",
+                            'odom':"/fsds/testing_only/odom", 
+                            'path':"/AMP/path_concatenated",
+                            'control':"/fsds/control_command"
                             }.items()
-    )
-
-    fsds = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join( 
-            get_package_share_directory('fsds_ros2_bridge'), 'launch'),
-            '/fsds_ros2_bridge.launch.py'
-        ]),
-        launch_arguments = {'UDP_control':"True", 'mission_name':"skidpad"}.items()
-    )
-
-    point = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('as_utils'), 'launch'),
-            '/pointcloud_rgb.launch.py'
-        ]),
-        launch_arguments={'track':"/testing_only/track", 'frame_id':"fsds/map"}.items()
     )
 
     yolo = IncludeLaunchDescription(
@@ -61,7 +52,6 @@ def generate_launch_description():
                           'inferenceresult':"/Yolov8_Inference",
                           'inferenceimg':"/image/inference",
                           'namespace':"/AMP"}.items()
-
     )
 
     perception = IncludeLaunchDescription(
@@ -84,7 +74,7 @@ def generate_launch_description():
             '/mapper.launch.py'
             ]),
             launch_arguments={'odom':'/fsds/testing_only/odom',
-                              'track':"/position_estimation/track",
+                              'track':"/track",
                               'track_pub':"/mapper/track",
                               'namespace':"/AMP"}.items()
     )
@@ -92,37 +82,50 @@ def generate_launch_description():
     track_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('mapper'),'launch'),
-            '/mapper_test.launch.py'
+            '/sim_mapper.launch.py'
             ]),
             launch_arguments={'odom':'/fsds/testing_only/odom',
                               'track':"/fsds/testing_only/track",
-                              'track_pub':"/position_estimation/track",
+                              'track_pub':"/track",
                               'namespace':"/AMP"}.items()
     )
 
-    disparity = IncludeLaunchDescription(
+    laserscan = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('disparity'),'launch'),
-            '/fsds_disparity.launch.py'
+            get_package_share_directory('pointcloud_to_laserscan'),'launch'),
+            '/amp_pointcloud_to_laserscan.launch.py'
             ]),
-            launch_arguments={'left_image':"/fsds/cameracam2/image_color",
-                              'right_imgae':"/fsds/cameracam1/image_color",
-                              '/params':"/home/carlosmello/ws/src/passive_stereo/cfg/stereo_rgb_heavy_sim.yaml"}.items()
+            launch_arguments={'cloud_in':"/fsds/lidar/Lidar2",
+                              'scan':"/scan"}.items()
     )
 
+    slam_toolbox = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('slam_toolbox'),'launch'),
+            '/online_async_launch.py'
+            ])
+    )
+
+    ekf = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('robot_localization'),'launch'),
+            '/ekf_amp.launch.py'
+            ])
+    )
+
+
     return LaunchDescription([
+        ExecuteProcess(
+            cmd=['/opt/ros/humble/lib/tf2_ros/static_transform_publisher',
+                  '--yaw', '0',
+                  '--roll', '0',
+                  '--pitch', '0',
+                  '--frame-id', 'fsds/map',
+                  '--child-frame-id', 'fsds/odom'],
+            output='screen',),
         path,
         control,
-        foxglove,
-        fsds,
-        point,
-        yolo,
-        perception,
-        mapper,
-        track_sim,
-        disparity,
-        TimerAction(
-            period=5.0,  
-            actions=[fsds],
-        )
+        laserscan,
+        transform,
+        slam_toolbox
     ])

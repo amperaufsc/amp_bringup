@@ -14,7 +14,7 @@ def generate_launch_description():
             get_package_share_directory('pointcloud_to_laserscan'),'launch'),
             '/amp_pointcloud_to_laserscan.launch.py'
             ]),
-            launch_arguments={'cloud_in':"/fsds/lidar/Lidar2",
+            launch_arguments={'cloud_in':"/fsds/lidar/Lidar1",
                               'scan':"/scan"}.items()
     )
     
@@ -42,6 +42,5 @@ def generate_launch_description():
 
     return LaunchDescription([
         laserscan,
-        transform,
         slam_toolbox
     ])
