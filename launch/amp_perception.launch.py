@@ -13,6 +13,15 @@ from launch_ros.actions import Node
 def generate_launch_description():
     
 
+    depthai = IncludeLaunchDescription(
+    PythonLaunchDescriptionSource([
+        os.path.join(
+            FindPackageShare('depthai_ros_driver').find('depthai_ros_driver'), 
+            'launch', 'camera.launch.py')
+        ])
+    )
+
+
     yolo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join( 
             get_package_share_directory('yolobot_recognition'), 'launch'),
@@ -39,9 +48,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        yolo,
-        perception
-        
+        depthai,
     ])
 
 

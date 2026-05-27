@@ -8,13 +8,33 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    
+
+    mapper = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('mapper'),'launch'),
+            '/mapper.launch.py'
+            ]),
+            launch_arguments={'track':"/track",
+                              'odom':"/odom",
+                              'track_pub':"/track_pub"
+                              }.items()
+    )
+
+    track = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('amp_utils'),'launch'),
+            '/pointcloud_rgb.launch.py'
+            ]),
+            launch_arguments={'track_pub':"/track_pub",
+                              'pointcloud':"/pointcloud"}.items()
+    )
+
     laserscan = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('pointcloud_to_laserscan'),'launch'),
             '/amp_pointcloud_to_laserscan.launch.py'
             ]),
-            launch_arguments={'cloud_in':"/fsds/lidar/Lidar2",
+            launch_arguments={'cloud_in':"/pointcloud",
                               'scan':"/scan"}.items()
     )
     
@@ -43,5 +63,6 @@ def generate_launch_description():
     return LaunchDescription([
         laserscan,
         transform,
-        slam_toolbox
+        track,
+        mapper
     ])
