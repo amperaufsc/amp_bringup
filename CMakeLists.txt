@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(as_bringup)
+project(amp_bringup)
 
 # Default to C++14 if no standard is specified
 if(NOT CMAKE_CXX_STANDARD)

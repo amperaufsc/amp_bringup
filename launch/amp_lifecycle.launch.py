@@ -52,24 +52,9 @@ def final_status_check(context, *args, **kwargs):
 
 
 def generate_launch_description():
-    perception_launch = IncludeLaunchDescription(
+    '''perception_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('perception'), 'launch/lifecycle_dpe.launch.py')
-        )
-    )
-    path_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('path_planning'), 'launch/path_lifecycle.launch.py')
-        )
-    )
-    control_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('control'), 'launch/control_lifecycle.launch.py')
-        )
-    )
-    mapper_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('mapper'), 'launch/mapper_lifecycle.launch.py')
         )
     )
 
@@ -77,11 +62,28 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('state_machine_as'), 'launch/state_node.launch.py')
         )
+    )'''
+
+    mapper_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('mapper'), 'launch/mapper_lifecycle.launch.py')
+        )
+    )
+    
+    path_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('path_planning'), 'launch/path_planning_lifecycle.launch.py')
+        )
+    )
+    control_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('control'), 'launch/control_lifecycle.launch.py')
+        )
     )
 
     return LaunchDescription([
-        state_machine_launch,
-        perception_launch,
+        #state_machine_launch,
+        #perception_launch,
         path_launch,
         control_launch,
         mapper_launch,
