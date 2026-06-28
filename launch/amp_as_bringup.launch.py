@@ -123,5 +123,5 @@ def generate_launch_description():
         can_launch,
         check_launch,
         delayed_smacc_launch, 
-        orbslam3_launch
+        #orbslam3_launch
         ])
