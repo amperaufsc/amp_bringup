@@ -69,6 +69,13 @@ def generate_launch_description():
             os.path.join(get_package_share_directory('amp_sm'), 'launch', 'repeater_lifecycle.launch.py')
         )
     )
+
+    can_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('amp_utils'), 'launch', 'can_pub.launch.py')
+        )
+    )
+
     #
     #
 
@@ -106,13 +113,14 @@ def generate_launch_description():
 
     return LaunchDescription([
         LogInfo(msg="=== INICIANDO O BRINGUP DO SISTEMA ==="),
-        camera_launch,
-        yolo_launch,
-        perception_launch,
-        path_launch,
-        control_launch,
-        repeater_launch,
-        odometry_launch,
+        #camera_launch,
+        #yolo_launch,
+        #perception_launch,
+        #path_launch,
+        #control_launch,
+        #repeater_launch,
+        #odometry_launch,
+        can_launch,
         check_launch,
         delayed_smacc_launch, 
         orbslam3_launch
