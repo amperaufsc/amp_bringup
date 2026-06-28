@@ -72,7 +72,7 @@ def generate_launch_description():
     #
 
     delayed_smacc_launch = TimerAction(
-        period=15.0,
+        period=10.0,
         actions=[LogInfo(msg="Tempo Acabou !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
                  state_machine_launch]
     )
