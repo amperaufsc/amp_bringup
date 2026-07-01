@@ -109,13 +109,13 @@ def generate_launch_description():
     return LaunchDescription([
         LogInfo(msg="=== INICIANDO O BRINGUP DO SISTEMA ==="),
         #camera_launch,
-        #yolo_launch,
-        #perception_launch,
-        #path_launch,
-        #control_launch,
-        #repeater_launch,
-        #odometry_launch,
-        can_launch,
+        yolo_launch,
+        perception_launch,
+        path_launch,
+        control_launch,
+        repeater_launch,
+        odometry_launch,
+        #can_launch,
         check_launch,
         delayed_smacc_launch
         #orbslam3_launch
