@@ -12,7 +12,7 @@ def generate_launch_description():
     #
     path_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('path_planning'), 'launch', 'path_planning.launch.py')
+            os.path.join(get_package_share_directory('path_planning'), 'launch', 'path_planning_lifecycle.launch.py')
         )
     )
 
@@ -108,15 +108,15 @@ def generate_launch_description():
 
     return LaunchDescription([
         LogInfo(msg="=== INICIANDO O BRINGUP DO SISTEMA ==="),
-        #camera_launch,
+        camera_launch,
         yolo_launch,
         perception_launch,
         path_launch,
         control_launch,
         repeater_launch,
         odometry_launch,
-        #can_launch,
+        can_launch,
         check_launch,
         delayed_smacc_launch
-        #orbslam3_launch
+        orbslam3_launch
         ])
