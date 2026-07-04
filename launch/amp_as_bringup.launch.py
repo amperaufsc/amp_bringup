@@ -48,7 +48,11 @@ def generate_launch_description():
         )
     )
 
-
+    orbslam3_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('orbslam3_ros2'), 'launch', 'amp_stereo.launch.py')
+        )
+    )
 
     #
     # State Machine
@@ -75,7 +79,7 @@ def generate_launch_description():
     #
 
     delayed_smacc_launch = TimerAction(
-        period=10.0,
+        period=45.0,
         actions=[LogInfo(msg="Tempo Acabou !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
                  state_machine_launch]
     )
@@ -117,6 +121,6 @@ def generate_launch_description():
         odometry_launch,
         can_launch,
         check_launch,
-        delayed_smacc_launch
+        delayed_smacc_launch,
         orbslam3_launch
         ])
