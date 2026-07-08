@@ -4,6 +4,8 @@ from launch.actions import IncludeLaunchDescription, LogInfo
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch.actions import TimerAction
+from launch.actions import DeclareLaunchArgument as LaunchArg
+
 
 def generate_launch_description():
 
@@ -45,13 +47,19 @@ def generate_launch_description():
     odometry_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('mapper'), 'launch', 'odometry.launch.py')
-        )
+        ),
+        launch_arguments={'pose_sub':'/AMP/orbslam/pose',
+                          'odom_pub':'/orbslam/odom'
+                         }.items()
     )
 
     orbslam3_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('orbslam3_ros2'), 'launch', 'amp_stereo.launch.py')
-        )
+            os.path.join(get_package_share_directory('orbslam3_ros2'), 'launch', 'amp_stereo.launch.py')),
+            launch_arguments={'left_camera':"/oak/left/image_raw",
+                          'right_camera':"/oak/right/image_raw",
+                          'frame_id':'orbslam3',
+                          'namespace':"/AMP"}.items()
     )
 
     #
@@ -104,6 +112,7 @@ def generate_launch_description():
             os.path.join(get_package_share_directory('yolobot_recognition'), 'launch', 'yolov8_lifecycle.launch.py')
         )
     )
+    
 
     # -- implementar transformacoes --
 
@@ -117,10 +126,10 @@ def generate_launch_description():
         perception_launch,
         path_launch,
         control_launch,
-        repeater_launch,
+        #repeater_launch,
         odometry_launch,
-        can_launch,
-        check_launch,
-        delayed_smacc_launch,
+        #can_launch,
+        #check_launch,
+        #delayed_smacc_launch,
         orbslam3_launch
         ])
