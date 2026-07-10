@@ -61,8 +61,18 @@ def generate_launch_description():
             get_package_share_directory('mapper'),'launch'),
             '/odometry.launch.py'
             ]),
-            launch_arguments={'pose_sub':'/AMP/orbslam/pose',
+            launch_arguments={'pose_sub':'/orbslam/pose2',
                               'odom_pub':"/orbslam/odom"}.items()                    
+    )
+
+    mapper = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('mapper'),'launch'),
+            '/mapper_lifecycle.launch.py'
+            ]),
+            launch_arguments={'track':'/track',
+                              'odom':"/orbslam/odom",
+                              'track_pub':"/mapper/track"}.items()                    
     )
 
 
@@ -74,7 +84,7 @@ def generate_launch_description():
         launch_arguments={'namespace':"/AMP",
                           'odom':"/orbslam/odom", 
                           'go': "/signal/go", 
-                          'track':"/track"}.items()
+                          'track':"/mapper/track"}.items()
     )
 
     control = IncludeLaunchDescription(
@@ -98,27 +108,23 @@ def generate_launch_description():
    
     return LaunchDescription([
         
-        ExecuteProcess(
-            cmd=['/opt/ros/humble/lib/tf2_ros/static_transform_publisher',
-                  '--yaw', '0',
-                  '--roll', '0',
-                  '--pitch', '0',
-                  '--frame-id', 'orbslam3',
-                  '--child-frame-id', 'map'],
-            output='screen',),
-        ExecuteProcess(
-             cmd=['/opt/ros/humble/lib/tf2_ros/static_transform_publisher',
-                  '--yaw', '-1.5707963270',
-                  '--roll', '-1.5707963270',
-                  '--pitch', '-1.5707963270',
-                  '--frame-id', 'oak_left_camera_optical_frame',
-                  '--child-frame-id', 'left_camera_link'],
-             output='screen',),
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='left_camera_optical_tf',
+            arguments=[
+                '--x', '0', '--y', '0', '--z', '0',
+                '--qx', '-0.5', '--qy', '0.5', '--qz', '-0.5', '--qw', '0.5',
+                '--frame-id', 'left_camera_link',
+                '--child-frame-id', 'oak_left_camera_optical_frame'
+            ]
+        ),
         depthai,
         yolo,
         perception,
         orbslam,
         orbslam_odom,
+        mapper,
         path,
         control,
         # can
