@@ -74,20 +74,39 @@ def generate_launch_description():
     repeater_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('amp_sm'), 'launch', 'repeater_lifecycle.launch.py')
-        )
+        ),
+        launch_arguments={
+                    # Subscribe topics
+                    'mission_select_in' : "/as_amp/mission_select",
+                    'go_in' : "/as_amp/res/go",
+                    'ready_in' : "/as_amp/res/as_ready",
+                    'emergency_in' : "/as_amp/res/as_emergency",
+                    #Publish topics
+                    'mission_go_out' : "/as_amp/mission_selected/go",
+                    'go_out' : "/as_amp/res/go_out", 
+                    'ready_out' : "/as_amp/res/as_ready_out",
+                    'emergency_out' : "/as_amp/res/as_emergency_out",
+                    'namespace':""
+                    }.items()
     )
 
     can_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('amp_utils'), 'launch', 'can_pub.launch.py')
-        )
+        ),
+        launch_arguments={'autonomous_mode_topic' : "/as_amp/mission_select",
+                    'as_status_topic' : "/as_amp/res/as_ready",
+                    'go_signal_topic' : "/as_amp/res/go",
+                    'emergency_topic' : "/as_amp/res/as_emergency",
+                    'namespace':""
+                    }.items()
     )
 
     #
     #
 
     delayed_smacc_launch = TimerAction(
-        period=45.0,
+        period=40.0,
         actions=[LogInfo(msg="Tempo Acabou !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
                  state_machine_launch]
     )
@@ -98,7 +117,8 @@ def generate_launch_description():
     perception_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('perception'), 'launch', 'amp_perception_lifecycle.launch.py')
-        )
+        ),
+        launch_arguments={'namespace':""}.items()
     )
 
     camera_launch = IncludeLaunchDescription(
@@ -110,7 +130,8 @@ def generate_launch_description():
     yolo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('yolobot_recognition'), 'launch', 'yolov8_lifecycle.launch.py')
-        )
+        ),
+        launch_arguments={'namespace':""}.items()
     )
     
 
@@ -125,11 +146,12 @@ def generate_launch_description():
         yolo_launch,
         perception_launch,
         path_launch,
+        mapper_launch,
         control_launch,
-        #repeater_launch,
+        repeater_launch,
         odometry_launch,
-        #can_launch,
-        #check_launch,
-        #delayed_smacc_launch,
+        can_launch,
+        check_launch,
+        delayed_smacc_launch,
         orbslam3_launch
         ])
