@@ -1,6 +1,7 @@
 import os
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, LogInfo, Node
+from launch.actions import IncludeLaunchDescription, LogInfo 
+from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch.actions import TimerAction
@@ -151,9 +152,9 @@ def generate_launch_description():
             name='left_camera_optical_tf',
             arguments=[
                 '--x', '0', '--y', '0', '--z', '0',
-                '--qx', '-0.5', '--qy', '0.5', '--qz', '-0.5', '--qw', '0.5',
+                '--qx', '0.0', '--qy', '0.0', '--qz', '0.0', '--qw', '1.0',
                 '--frame-id', 'left_camera_link',
-                '--child-frame-id', 'oak_left_camera_optical_frame'
+                '--child-frame-id', 'oak-d-base-frame'
             ]
         ),
         camera_launch,
