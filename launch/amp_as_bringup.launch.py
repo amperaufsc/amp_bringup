@@ -21,7 +21,9 @@ def generate_launch_description():
     control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('control'), 'launch', 'control_lifecycle.launch.py')
-        )
+        ),
+        launch_arguments={'namespace': '',
+                "path" : "path_concatenated"}.items()
     )
 
     check_launch = IncludeLaunchDescription(
@@ -106,7 +108,7 @@ def generate_launch_description():
     #
 
     delayed_smacc_launch = TimerAction(
-        period=40.0,
+        period=25.0,
         actions=[LogInfo(msg="Tempo Acabou !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
                  state_machine_launch]
     )

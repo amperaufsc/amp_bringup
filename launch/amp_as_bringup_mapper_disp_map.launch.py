@@ -110,7 +110,7 @@ def generate_launch_description():
     #
 
     delayed_smacc_launch = TimerAction(
-        period=30.0,
+        period=25.0,
         actions=[LogInfo(msg="Tempo Acabou !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"),
                  state_machine_launch]
     )
@@ -168,6 +168,17 @@ def generate_launch_description():
                 '--qx', '-0.5', '--qy', '0.5', '--qz', '-0.5', '--qw', '0.5',
                 '--frame-id', 'left_camera_link',
                 '--child-frame-id', 'oak_left_camera_optical_frame'
+            ]
+        ),
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='map_orbslam_tf',
+            arguments=[
+                '--x', '0', '--y', '0', '--z', '0',
+                '--qx', '0', '--qy', '0', '--qz', '0', '--qw', '0',
+                '--frame-id', 'map',
+                '--child-frame-id', 'orbslam3'
             ]
         ),
         camera_launch,
