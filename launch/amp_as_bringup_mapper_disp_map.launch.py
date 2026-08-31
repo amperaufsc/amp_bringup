@@ -25,6 +25,12 @@ def generate_launch_description():
         )
     )
 
+    low_level_control_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('control'), 'launch', 'low_level_control.launch.py')
+        )
+    )
+
     check_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('control'), 'launch', 'check_lifecycle.launch.py')
@@ -189,7 +195,6 @@ def generate_launch_description():
         control_launch,
         repeater_launch,
         odometry_launch,
-        can_launch,
         check_launch,
         delayed_smacc_launch,
         disparity_map_launch,
